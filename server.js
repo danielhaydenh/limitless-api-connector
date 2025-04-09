@@ -3,6 +3,11 @@ import fetch from 'node-fetch';
 
 const fastify = Fastify({ logger: true });
 
+// Health check
+fastify.get('/health', async (request, reply) => {
+  return { status: 'ok' };
+});
+
 // Root route
 fastify.get('/', async (request, reply) => {
   return { message: 'Limitless API is live!' };
@@ -33,9 +38,9 @@ fastify.get('/get-latest-tournaments', async (request, reply) => {
     const data = await response.json();
     return data.data.tournaments.nodes;
   } catch (err) {
-  console.error('[Meta Deck Fetch Error]', err);
-  reply.code(500).send({ error: err.message || 'Error fetching meta decks' });
-}
+    console.error('[Latest Tournaments Error]', err);
+    reply.code(500).send({ error: err.message || 'Error fetching tournaments' });
+  }
 });
 
 // GET meta decks
@@ -81,8 +86,8 @@ fastify.get('/get-meta-decks', async (request, reply) => {
     const data = await response.json();
     return data.data.tournamentStandings.nodes;
   } catch (err) {
-    console.error(err);
-    reply.code(500).send({ error: 'Error fetching meta decks' });
+    console.error('[Meta Deck Fetch Error]', err);
+    reply.code(500).send({ error: err.message || 'Error fetching meta decks' });
   }
 });
 
