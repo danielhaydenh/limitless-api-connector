@@ -3,12 +3,12 @@ import Fastify from 'fastify';
 
 const fastify = Fastify({ logger: true });
 
-// Test route
+// Root route
 fastify.get('/', async (request, reply) => {
   return { message: 'Limitless API is live!' };
 });
 
-// Latest tournaments endpoint
+// /get-latest-tournaments
 fastify.get('/get-latest-tournaments', async (request, reply) => {
   const query = `
     {
@@ -38,7 +38,7 @@ fastify.get('/get-latest-tournaments', async (request, reply) => {
   }
 });
 
-// Meta decks endpoint
+// /get-meta-decks
 fastify.get('/get-meta-decks', async (request, reply) => {
   const query = `
     {
@@ -86,7 +86,7 @@ fastify.get('/get-meta-decks', async (request, reply) => {
   }
 });
 
-// Start the server
+// Listen on proper port
 fastify.listen({ port: process.env.PORT || 3000, host: '0.0.0.0' }, err => {
   if (err) {
     fastify.log.error(err);
