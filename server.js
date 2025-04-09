@@ -1,5 +1,5 @@
-import fetch from 'node-fetch';
 import Fastify from 'fastify';
+import fetch from 'node-fetch';
 
 const fastify = Fastify({ logger: true });
 
@@ -8,7 +8,7 @@ fastify.get('/', async (request, reply) => {
   return { message: 'Limitless API is live!' };
 });
 
-// /get-latest-tournaments
+// GET latest tournaments
 fastify.get('/get-latest-tournaments', async (request, reply) => {
   const query = `
     {
@@ -38,7 +38,7 @@ fastify.get('/get-latest-tournaments', async (request, reply) => {
   }
 });
 
-// /get-meta-decks
+// GET meta decks
 fastify.get('/get-meta-decks', async (request, reply) => {
   const query = `
     {
@@ -86,7 +86,7 @@ fastify.get('/get-meta-decks', async (request, reply) => {
   }
 });
 
-// Listen on proper port
+// Start server
 fastify.listen({ port: process.env.PORT || 3000, host: '0.0.0.0' }, err => {
   if (err) {
     fastify.log.error(err);
