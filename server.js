@@ -33,9 +33,9 @@ fastify.get('/get-latest-tournaments', async (request, reply) => {
     const data = await response.json();
     return data.data.tournaments.nodes;
   } catch (err) {
-    console.error(err);
-    reply.code(500).send({ error: 'Error fetching tournaments' });
-  }
+  console.error('[Meta Deck Fetch Error]', err);
+  reply.code(500).send({ error: err.message || 'Error fetching meta decks' });
+}
 });
 
 // GET meta decks
