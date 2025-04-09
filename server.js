@@ -3,18 +3,13 @@ import fetch from 'node-fetch';
 
 const fastify = Fastify({ logger: true });
 
-// Health check
-fastify.get('/health', async (request, reply) => {
-  return { status: 'ok' };
-});
-
 // Root route
 fastify.get('/', async (request, reply) => {
   return { message: 'Limitless API is live!' };
 });
 
-// GET latest tournaments
-fastify.get('/get-latest-tournaments', async (request, reply) => {
+// Proxy to LimitlessTCG API
+fastify.get('/proxy-latest-tournaments', async (request, reply) => {
   const query = `
     {
       tournaments(limit: 5, orderBy: {startDate: desc}, filter: {format: "STANDARD"}) {
@@ -38,7 +33,7 @@ fastify.get('/get-latest-tournaments', async (request, reply) => {
     const data = await response.json();
     return data.data.tournaments.nodes;
   } catch (err) {
-    console.error('[Latest Tournaments Error]', err);
+    console.error('[Proxy Error]', err);
     reply.code(500).send({ error: err.message || 'Error fetching tournaments' });
   }
 });
