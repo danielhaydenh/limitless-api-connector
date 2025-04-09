@@ -31,8 +31,8 @@ fastify.get('/proxy-latest-tournaments', async (request, reply) => {
     });
 
     const data = await response.json();
+    console.log('LimitlessTCG API Response:', data); // Log the response for debugging
 
-    // Check if there's an error in the API response
     if (!data || !data.data) {
       console.error('LimitlessTCG API Response Error:', data);
       return reply.code(500).send({ error: 'Error in API response' });
@@ -87,7 +87,6 @@ fastify.get('/get-meta-decks', async (request, reply) => {
 
     const data = await response.json();
 
-    // Check if there's an error in the API response
     if (!data || !data.data) {
       console.error('LimitlessTCG API Response Error:', data);
       return reply.code(500).send({ error: 'Error in API response' });
