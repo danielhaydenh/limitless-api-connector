@@ -31,9 +31,16 @@ fastify.get('/proxy-latest-tournaments', async (request, reply) => {
     });
 
     const data = await response.json();
+
+    // Check if there's an error in the API response
+    if (!data || !data.data) {
+      console.error('LimitlessTCG API Response Error:', data);
+      return reply.code(500).send({ error: 'Error in API response' });
+    }
+
     return data.data.tournaments.nodes;
   } catch (err) {
-    console.error('[Proxy Error]', err);
+    console.error('[Proxy Error Details]', err);
     reply.code(500).send({ error: err.message || 'Error fetching tournaments' });
   }
 });
@@ -79,9 +86,16 @@ fastify.get('/get-meta-decks', async (request, reply) => {
     });
 
     const data = await response.json();
+
+    // Check if there's an error in the API response
+    if (!data || !data.data) {
+      console.error('LimitlessTCG API Response Error:', data);
+      return reply.code(500).send({ error: 'Error in API response' });
+    }
+
     return data.data.tournamentStandings.nodes;
   } catch (err) {
-    console.error('[Meta Deck Fetch Error]', err);
+    console.error('[Meta Deck Fetch Error Details]', err);
     reply.code(500).send({ error: err.message || 'Error fetching meta decks' });
   }
 });
